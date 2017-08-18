@@ -20,7 +20,7 @@ if p3 is not null then days_back := p3; end if;
 
 sql_sub := 
 '
-select distinct gurfeed_doc_code transaction_id
+select distinct gurfeed_doc_code transaction_id, to_char(gurfeed_activity_date,''MM/DD/YYYY'') transaction_date
 from daies.gurfeed
 where gurfeed_system_id like ''ACT%'' and gurfeed_rec_type != ''1''
 ';
@@ -33,7 +33,7 @@ if p4 is not null then
 sql_sub := sql_sub || ' and gurfeed_doc_code = ''' || p4 || ''' ';
 end if;
 
-sql_sub := sql_sub || ' group by gurfeed_doc_code order by gurfeed_doc_code';
+sql_sub := sql_sub || ' group by gurfeed_doc_code, to_char(gurfeed_activity_date,''MM/DD/YYYY'') order by gurfeed_doc_code';
 
 
 begin
