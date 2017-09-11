@@ -40,10 +40,10 @@ from
 (
 select distinct gurfeed_detail_code detail_code, gurfeed_dr_cr_ind charge_balance, 
 gurfeed_fund_code account_fund_code, gurfeed_orgn_code account_orgn_code, gurfeed_acct_code account_account_code, gurfeed_prog_code account_function_code, gurfeed_actv_code account_actv_code, 
-gurfeed_locn_code account_locn_code, tbracct.TBRACCT_ACCOUNT_A account_worktag, gurfeed_tran_number transaction_id,
+gurfeed_locn_code account_locn_code, GURFEED_ACCOUNT account_worktag, gurfeed_tran_number transaction_id,
 gurfeed_trans_amt account_amount, gurfeed_activity_date activity_date, gurfeed_tran_number tran_number, gurfeed_id student_id
-from daies.gurfeed, tbracct
-where gurfeed_doc_code = ''' || p0 || ''' and gurfeed_dr_cr_ind = ''D'' and gurfeed.GURFEED_DETAIL_CODE = tbracct.TBRACCT_DETAIL_CODE(+) and tbracct.TBRACCT_USER_ID(+) = ''Workday''
+from daies.gurfeed
+where gurfeed_doc_code = ''' || p0 || ''' and gurfeed_dr_cr_ind = ''D''
 and gurfeed_system_id like ''ACT%'' and gurfeed_rec_type != ''1''
 ) a
 ) aa,
@@ -55,10 +55,10 @@ from
 (
 select distinct gurfeed_detail_code detail_code, gurfeed_dr_cr_ind charge_balance, 
 gurfeed_fund_code account_fund_code, gurfeed_orgn_code account_orgn_code, gurfeed_acct_code account_account_code, gurfeed_prog_code account_function_code, gurfeed_actv_code account_actv_code, 
-gurfeed_locn_code account_locn_code, tbracct.TBRACCT_ACCOUNT_B account_worktag, gurfeed_tran_number transaction_id,
+gurfeed_locn_code account_locn_code, GURFEED_ACCOUNT account_worktag, gurfeed_tran_number transaction_id,
 gurfeed_trans_amt account_amount, gurfeed_activity_date activity_date, gurfeed_tran_number tran_number, gurfeed_id student_id
-from daies.gurfeed, tbracct
-where gurfeed_doc_code = ''' || p0 || ''' and gurfeed_dr_cr_ind = ''C'' and gurfeed.GURFEED_DETAIL_CODE = tbracct.TBRACCT_DETAIL_CODE(+) and tbracct.TBRACCT_USER_ID(+) = ''Workday''
+from daies.gurfeed
+where gurfeed_doc_code = ''' || p0 || ''' and gurfeed_dr_cr_ind = ''C''
 and gurfeed_system_id like ''ACT%'' and gurfeed_rec_type != ''1''
 ) b
 ) bb
