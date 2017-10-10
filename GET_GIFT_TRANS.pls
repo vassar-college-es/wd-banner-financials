@@ -1,9 +1,10 @@
-create or replace procedure get_gift_trans (p0 in varchar2 default null, p1 in number default 0, p2 in varchar2 default null, p3 in varchar2 default null, ref_cur_out out SYS_REFCURSOR)
+create or replace procedure get_gift_trans (p0 in varchar2 default null, p1 in number default 0, p2 in varchar2 default null, p3 in varchar2 default null, p4 in varchar2 default null,  ref_cur_out out SYS_REFCURSOR)
 as
 -- p0 : rucl_code
 -- p1: back // days back on GURFEED
 -- p2: RUCL param
 -- p3 : transaction_id (batch number)
+-- p4 : gift_number
 
 -- ref_cur_out : out REF_CURSOR
 
@@ -32,6 +33,10 @@ sql_sub := sql_sub || ' and gurfeed_activity_date like sysdate - ' || days_back;
 
 if p2 is not null then
 sql_sub := sql_sub || ' and gurfeed_rucl_code = ''' || p2 || ''' ';
+end if;
+
+if p4 is not null then
+sql_sub := sql_sub || ' and gurfeed_doc_ref_num = ''' || p4 || ''' ';
 end if;
 
 /*sql_sub := sql_sub || ' group by 
