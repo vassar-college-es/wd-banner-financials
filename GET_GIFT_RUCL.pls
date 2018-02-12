@@ -19,8 +19,13 @@ if p2 is not null then res_limit := p2; end if;
 if p3 is not null then days_back := p3; end if;
 
 sql_sub := 
-'
+/*'
 select distinct gurfeed_doc_code transaction_id, to_char(gurfeed_activity_date,''MM/DD/YYYY'') transaction_date, gurfeed_rucl_code rule_class_code, ''description of rule code'' rule_code_desc, sum(gurfeed_trans_amt) rule_class_total
+from daies.gurfeed
+where gurfeed_system_id = ''ALUMNI'' and gurfeed_user_id not like ''HEADER%''
+';*/
+'
+select distinct gurfeed_doc_code transaction_id, gurfeed_rucl_code rule_class_code, ''description of rule code'' rule_code_desc, sum(gurfeed_trans_amt) rule_class_total
 from daies.gurfeed
 where gurfeed_system_id = ''ALUMNI'' and gurfeed_user_id not like ''HEADER%''
 ';

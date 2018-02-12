@@ -11,7 +11,7 @@ begin
 
 sql_sub := 
 '
-select agvglst_gift_code type, adbdesg_orgn_code gift_orgn_code, agvglst_desg designation, agvglst_amt amount, adbdesg_gl_no_credit ref_id, adbdesg_gl_no_debit award, adbdesg_gl_no_credit_pldg award_sponsor
+select agvglst_gift_code type, adbdesg_orgn_code gift_orgn_code, agvglst_desg designation, agvglst_amt amount, to_char(agvglst_gift_date,''MM/DD/YYYY'') gift_date, adbdesg_gl_no_credit ref_id, adbdesg_gl_no_debit award, adbdesg_gl_no_credit_pldg award_sponsor
 from agvglst, adbdesg
 where agvglst_pidm = ' || p0 || ' and agvglst_gift_no = ''' || p1 || '''
 and agvglst_desg = adbdesg_desg
