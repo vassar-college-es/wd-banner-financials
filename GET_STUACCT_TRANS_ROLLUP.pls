@@ -26,8 +26,8 @@ sql_sub :=
 '
 select 
 debit_detail_code, debit_account_fund_code, debit_account_orgn_code, debit_account_account_code, debit_account_function_code, debit_account_actv_code, debit_account_locn_code, debit_account_worktag,  
-credit_detail_code, credit_account_fund_code, credit_account_orgn_code, credit_account_account_code, credit_account_function_code, credit_account_actv_code, credit_account_locn_code, credit_account_worktag,
-sum(debit_account_amount) account_charge
+credit_detail_code, credit_account_fund_code, credit_account_orgn_code, credit_account_account_code, credit_account_function_code, credit_account_actv_code, credit_account_locn_code, credit_account_worktag, 
+to_char(debit_trans_date,''MM/DD/YYYY'') transaction_date, sum(debit_account_amount) account_charge
 from 
 (
 select aa.*, bb.*
@@ -35,12 +35,12 @@ from
 (
 select distinct a.detail_code debit_detail_code, a.charge_balance debit_charge_balance, a.account_fund_code debit_account_fund_code, a.account_orgn_code debit_account_orgn_code, a.account_account_code debit_account_account_code,
 a.account_function_code debit_account_function_code, a.account_actv_code debit_account_actv_code, a.account_locn_code debit_account_locn_code, a.account_worktag debit_account_worktag, a.account_amount debit_account_amount,
-a.tran_number debit_tran_number, a.activity_date debit_activity_date, a.student_id debit_student_id
+a.tran_number debit_tran_number, a.activity_date debit_activity_date, a.student_id debit_student_id, a.trans_date debit_trans_date
 from
 (
 select distinct gurfeed_detail_code detail_code, gurfeed_dr_cr_ind charge_balance, 
 gurfeed_fund_code account_fund_code, gurfeed_orgn_code account_orgn_code, gurfeed_acct_code account_account_code, gurfeed_prog_code account_function_code, gurfeed_actv_code account_actv_code, 
-gurfeed_locn_code account_locn_code, GURFEED_ACCOUNT account_worktag, gurfeed_tran_number transaction_id,
+gurfeed_locn_code account_locn_code, GURFEED_ACCOUNT account_worktag, gurfeed_tran_number transaction_id, gurfeed_trans_date trans_date,
 gurfeed_trans_amt account_amount, gurfeed_activity_date activity_date, gurfeed_tran_number tran_number, gurfeed_id student_id
 from daies.gurfeed
 where gurfeed_doc_code = ''' || p0 || ''' and gurfeed_dr_cr_ind = ''D''
@@ -50,12 +50,12 @@ and gurfeed_system_id like ''ACT%'' and gurfeed_rec_type != ''1''
 (
 select distinct b.detail_code credit_detail_code, b.charge_balance credit_charge_balance, b.account_fund_code credit_account_fund_code, b.account_orgn_code credit_account_orgn_code, b.account_account_code credit_account_account_code,
 b.account_function_code credit_account_function_code, b.account_actv_code credit_account_actv_code, b.account_locn_code credit_account_locn_code, b.account_worktag credit_account_worktag, b.account_amount credit_account_amount, 
-b.tran_number credit_tran_number, b.activity_date credit_activity_date, b.student_id credit_student_id
+b.tran_number credit_tran_number, b.activity_date credit_activity_date, b.student_id credit_student_id, b.trans_date credit_trans_date
 from
 (
 select distinct gurfeed_detail_code detail_code, gurfeed_dr_cr_ind charge_balance, 
 gurfeed_fund_code account_fund_code, gurfeed_orgn_code account_orgn_code, gurfeed_acct_code account_account_code, gurfeed_prog_code account_function_code, gurfeed_actv_code account_actv_code, 
-gurfeed_locn_code account_locn_code, GURFEED_ACCOUNT account_worktag, gurfeed_tran_number transaction_id,
+gurfeed_locn_code account_locn_code, GURFEED_ACCOUNT account_worktag, gurfeed_tran_number transaction_id, gurfeed_trans_date trans_date,
 gurfeed_trans_amt account_amount, gurfeed_activity_date activity_date, gurfeed_tran_number tran_number, gurfeed_id student_id
 from daies.gurfeed
 where gurfeed_doc_code = ''' || p0 || ''' and gurfeed_dr_cr_ind = ''C''
@@ -68,7 +68,8 @@ sql_sub_wo := ' order by aa.debit_detail_code
 )
 group by
 debit_detail_code, debit_account_fund_code, debit_account_orgn_code, debit_account_account_code, debit_account_function_code, debit_account_actv_code, debit_account_locn_code, debit_account_worktag,  
-credit_detail_code, credit_account_fund_code, credit_account_orgn_code, credit_account_account_code, credit_account_function_code, credit_account_actv_code, credit_account_locn_code, credit_account_worktag
+credit_detail_code, credit_account_fund_code, credit_account_orgn_code, credit_account_account_code, credit_account_function_code, credit_account_actv_code, credit_account_locn_code, credit_account_worktag,
+debit_trans_date
 '
 
 ;
