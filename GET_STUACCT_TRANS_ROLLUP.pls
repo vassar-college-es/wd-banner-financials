@@ -9,7 +9,7 @@ as
 
 -- ref_cur_out : out REF_CURSOR
 
-res_limit number := 100;
+res_limit number := 1000;
 
 sql_sub varchar2(32000) := '';
 sql_sub_wo varchar2(32000) := '';
@@ -45,6 +45,7 @@ gurfeed_trans_amt account_amount, gurfeed_activity_date activity_date, gurfeed_t
 from daies.gurfeed
 where gurfeed_doc_code = ''' || p0 || ''' and gurfeed_dr_cr_ind = ''D''
 and gurfeed_system_id like ''ACT%'' and gurfeed_rec_type != ''1''
+and gurfeed_rucl_code not in (''APPS'')
 ) a
 ) aa,
 (
@@ -60,6 +61,7 @@ gurfeed_trans_amt account_amount, gurfeed_activity_date activity_date, gurfeed_t
 from daies.gurfeed
 where gurfeed_doc_code = ''' || p0 || ''' and gurfeed_dr_cr_ind = ''C''
 and gurfeed_system_id like ''ACT%'' and gurfeed_rec_type != ''1''
+and gurfeed_rucl_code not in (''APPS'')
 ) b
 ) bb
 where aa.debit_tran_number = bb.credit_tran_number and aa.debit_student_id = bb.credit_student_id and aa.debit_account_amount = bb.credit_account_amount';
