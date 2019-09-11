@@ -17,12 +17,10 @@ if p1 is not null then days_back := p1; end if;
 
 sql_sub := 
 '
-select distinct GURFEED_FUND_CODE gift_fund_code,  
-GURFEED_ACCT_CODE gift_account_code, GURFEED_PROG_CODE gift_prog_code, GURFEED_ACTV_CODE gift_actv_code, GURFEED_LOCN_CODE gift_locn_code, 
+select distinct 
 gurfeed_vendor_pidm gift_donor_identifier, gurfeed_doc_ref_num gift_number, decode(gurfeed_dr_cr_ind,''D'',''Debit'',''Credit'') gift_balance
-from daies.gurfeed, adbdesg
+from daies.gurfeed
 where gurfeed_system_id = ''ALUMNI'' and gurfeed_user_id not like ''HEADER%''
-and adbdesg_name(+) = gurfeed.GURFEED_TRANS_DESC
 and gurfeed_doc_code = ''' || p3 || '''
 and GURFEED_RUCL_CODE = ''' || p0 || ''''
 ;
